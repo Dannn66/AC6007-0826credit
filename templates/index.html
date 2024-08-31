@@ -51,14 +51,6 @@
             background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            text-align: center;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 20px;
         }
 
         @media (max-width: 600px) {
@@ -72,15 +64,20 @@
                 margin: 5px 0;
             }
         }
+
+        .robot-img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <br>
-        <br>
-        <img src="https://media.istockphoto.com/id/1610418898/photo/online-survey-and-digital-form-checklist-by-laptop-computer-document-management-checking.webp?b=1&s=170667a&w=0&k=20&c=2N-yA5t6nZ7p04gVbsckMqmxX8utsdqYecH5EjTI_bY=">
         <h2>Accounting and Finance genAT and web3 Application (robot friendly)</h2>
-        <h3>Hi, my name is TT robo advisor. May I know your name:</h3>
+        <img src="https://png.pngtree.com/png-clipart/20190903/original/pngtree-cartoon-hand-drawn-funny-robot-vector-png-image_4441901.jpg" alt="Funny Robot" width="300" height="300" class="robot-img">
+        <h3>Hi, my name is Friday robo advisor. May I know your name:</h3>
         <form action="/main" method="post">
             <input type="text" name="q" placeholder="Enter your name">
             <input type="submit" value="Enter">
@@ -88,6 +85,3 @@
     </div>
 </body>
 </html>
-
-
-
