@@ -4,7 +4,7 @@ import os
 import numpy as np
 
 api = os.getenv("MAKERSUITE_API_TOKEN")
-model = {"model":"models/chat-bison-001"}
+model = {"model":"models/text-bison-001"}
 palm.configure(api_key=api)
 
 app = Flask(__name__)
@@ -57,14 +57,14 @@ def makersuite():
 @app.route("/makersuite_1",methods=["GET","POST"])
 def makersuite_1():
     q = "Can you help me prepare my tax return?"
-    r = palm.chat(**model, messages=q)
-    return(render_template("makersuite_1_reply.html",r=r.last))
+    r = palm.generate_text(**model, prompt=q)
+    return(render_template("makersuite_1_reply.html",r=r.result))
 
 @app.route("/makersuite_gen",methods=["GET","POST"])
 def makersuite_gen():
     q = request.form.get("q")
-    r = palm.chat(**model, messages=q)
-    return(render_template("makersuite_gen_reply.html",r=r.last))
+    r = palm.generate_text(**model, prompt=q)
+    return(render_template("makersuite_gen_reply.html",r=r.result))
 
 if __name__ == "__main__":
     app.run()
