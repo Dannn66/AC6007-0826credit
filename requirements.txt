@@ -1,4 +1,3 @@
 gunicorn
 google-generativeai
 flask
-numpy
