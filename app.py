@@ -2,6 +2,7 @@ from flask import Flask,render_template,request
 import google.generativeai as palm
 import os
 import numpy as np
+import TextBlob
 
 api = os.getenv("MAKERSUITE_API_TOKEN")
 model = {"model":"models/text-bison-001"}
