@@ -1,4 +1,3 @@
-
 from flask import Flask,render_template,request
 import google.generativeai as palm
 import os
@@ -58,13 +57,13 @@ def makersuite():
 @app.route("/makersuite_1",methods=["GET","POST"])
 def makersuite_1():
     q = "Can you help me prepare my tax return?"
-    r = palm.text(**model, prompt=q)
+    r = palm.generate_text(**model, prompt=q)
     return(render_template("makersuite_1_reply.html",r=r.result))
 
 @app.route("/makersuite_gen",methods=["GET","POST"])
 def makersuite_gen():
     q = request.form.get("q")
-    r = palm.text(**model, promt=q)
+    r = palm.generate_text(**model, prompt=q)
     return(render_template("makersuite_gen_reply.html",r=r.result))
 
 if __name__ == "__main__":
