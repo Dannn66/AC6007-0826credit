@@ -50,6 +50,19 @@ def creditability_prediction():
     r = str(r)
     return(render_template("creditability_prediction.html",r=r))
 
+@app.route("/sentiment",methods=["GET","POST"])
+def sentiment():
+    return(render_template("sentiment.html"))
+
+@app.route("/sentiment_analysis",methods=["GET","POST"])
+def sentiment_analysis():
+    text = request.form.get("text")
+    blob = TextBlob(text)
+    sentiment = blob.sentiment
+    sentiment_result = "Positive" if sentiment.polarity > 0 else "Negative" if sentiment.polarity < 0 else "Neutral"
+    return render_template("sentiment_analysis.html", sentiment=sentiment_result, polarity=sentiment.polarity, subjectivity=sentiment.subjectivity)
+
+
 @app.route("/makersuite",methods=["GET","POST"])
 def makersuite():
     return(render_template("makersuite.html"))
