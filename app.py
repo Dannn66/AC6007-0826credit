@@ -57,11 +57,9 @@ def sentiment():
 
 @app.route("/sentiment_analysis",methods=["GET","POST"])
 def sentiment_analysis():
-    text = request.form.get("text")
-    blob = TextBlob(text)
-    sentiment = blob.sentiment
-    sentiment_result = "Positive" if sentiment.polarity > 0 else "Negative" if sentiment.polarity < 0 else "Neutral"
-    return render_template("sentiment_analysis.html", sentiment=sentiment_result, polarity=sentiment.polarity, subjectivity=sentiment.subjectivity)
+    q = request.form.get("q")
+    r = textblob.TextBlob(q).sentiment
+    return(render_template("sentiment_analysis.html",r=r))
 
 
 @app.route("/makersuite",methods=["GET","POST"])
