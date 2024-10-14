@@ -1,0 +1,122 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Example</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <input type="text" id="payer_add" placeholder="Enter payer address:">
+        <input type="text" id="payee_add" placeholder="Enter payee address:">
+        <input type="number" id="amount_to_transfer" placeholder="Enter amount to transfer:">
+        
+        <button class="btn" onclick="transfer()">Transfer</button>
+        <button class="btn" onclick="Transaction()">View Transaction</button>
+        
+        <p id="view_payer"></p>
+        <p id="view_payee"></p>
+        <p id="view_amount"></p>
+
+        <h2>Transfer Money</h2>
+        <form action="/main" method="post">
+            <input type="submit" value="Main">
+        </form>
+        <form action="/" method="post">
+            <input type="submit" value="End">
+        </form>
+
+        <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+        <script>
+            const contractAddress = "0x2cbeb4a635edf61b99a1d927e4ea4babf4857b2e";
+            const contractABI = [
+                {
+                    "inputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "amount_wx",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "payer_wx",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "payee_wx",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "weixin",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "check_transaction",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                }
+            ];
+
+            const web3 = new Web3(Web3.givenProvider);
+            const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+            async function transfer() {
+                const accounts = await web3.eth.requestAccounts();
+                console.log(accounts[0]);
+
+                // Corrected element IDs
+                const payer = document.getElementById("payer_add").value;
+                const payee = document.getElementById("payee_add").value;
+                const amount = document.getElementById("amount_to_transfer").value;
+
+                console.log(payer, payee, amount);
+
+                // Corrected method call syntax
+                await contract.methods.weixin(amount, payer, payee).send({ from: accounts[0] });
+            }
+
+            async function Transaction() {
+                // Await the contract call to get the transaction details
+                const result = await contract.methods.check_transaction().call();
+                const payer = result[0];
+                const payee = result[1];
+                const amount = result[2];
+
+                console.log(payer, payee, amount);
+
+                // Update the HTML with the retrieved values
+                document.getElementById("view_payer").innerText = "Payer is: " + payer;    
+                document.getElementById("view_payee").innerText = "Payee is: " + payee;    
+                document.getElementById("view_amount").innerText = "Amount is: " + amount;
+            }
+        </script>
+    </div>
+</body>
+
+

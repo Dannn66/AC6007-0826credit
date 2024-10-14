@@ -61,6 +61,9 @@ def sentiment_analysis():
     r = textblob.TextBlob(q).sentiment
     return(render_template("sentiment_analysis.html",r=r))
 
+@app.route("/transfer_money",methods=["GET","POST"])
+def transfer_money():
+    return(render_template("transfer_money.html"))
 
 @app.route("/makersuite",methods=["GET","POST"])
 def makersuite():
